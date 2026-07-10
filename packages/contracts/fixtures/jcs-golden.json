@@ -1,0 +1,16 @@
+{
+  "value": {
+    "version": 1,
+    "route": ["SFO", "SEA"],
+    "capability": {
+      "currency": "USD",
+      "amount_minor": 38900,
+      "expires_at": "2026-07-09T18:03:00Z",
+      "note": "synthetic 🚀"
+    }
+  },
+  "canonical": "{\"capability\":{\"amount_minor\":38900,\"currency\":\"USD\",\"expires_at\":\"2026-07-09T18:03:00Z\",\"note\":\"synthetic 🚀\"},\"route\":[\"SFO\",\"SEA\"],\"version\":1}",
+  "sha256": "aefd6ca16519c2c03d47723a187a1953bd366ec9b9a9a2513904ad1ef0ba09d6",
+  "hmac_key_hex": "00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+  "hmac_sha256": "7947b9b70928667a228e68e3baabd962686bccd6348c9642cdee3ccbaf5635db"
+}

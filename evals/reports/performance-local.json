@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "evidence_scope": "LOCAL_COMPONENT_ONLY",
+  "generated_at": "2026-07-10T08:39:29.608139+00:00",
+  "iterations": 50,
+  "metrics": {
+    "api_health_p95_ms": 0.6184579979162663,
+    "persisted_event_visibility_p95_ms": 6.356582976877689,
+    "approval_validation_p95_ms": 0.2285839873366058,
+    "replay_response_p95_ms": 3.579084004741162
+  },
+  "thresholds": {
+    "api_health_p95_ms": 250,
+    "persisted_event_visibility_p95_ms": 1000,
+    "approval_validation_p95_ms": 200,
+    "replay_response_p95_ms": 2000
+  },
+  "passes": {
+    "api_health_p95_ms": true,
+    "persisted_event_visibility_p95_ms": true,
+    "approval_validation_p95_ms": true,
+    "replay_response_p95_ms": true
+  },
+  "limitations": [
+    "Does not measure deployed landing-page LCP.",
+    "Replay timing covers the API bundle response, not remote route rendering.",
+    "Runtime loop overhead and production concurrency require deployed load evidence."
+  ]
+}

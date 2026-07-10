@@ -1,0 +1,871 @@
+{
+  "schemaVersion": "1.0.0",
+  "planId": "paired-primary-v1",
+  "releasePlan": true,
+  "evidenceStatus": "PREDECLARED_NOT_EXECUTED",
+  "scenarioId": "disrupted_trip_v1",
+  "taskContractSchemaVersion": "1.0.0",
+  "fixtureVersion": "disrupted-trip-v1",
+  "faultManifestVersion": "1.0.0",
+  "evaluationDesign": {
+    "pairCount": 30,
+    "intendedExecutionCount": 60,
+    "orderMethod": "DETERMINISTIC_BALANCED_INTERLEAVING",
+    "orderSalt": "trust-runtime-balanced-interleaving-v1",
+    "originalIntentAccounting": "ORIGINAL_ALWAYS_COUNTS_REPLACEMENT_NEVER_SUBSTITUTES",
+    "allowedInfrastructureInvalidReasons": [
+      "PROVIDER_OUTAGE",
+      "BROWSER_CRASH_BEFORE_FIRST_ACTOR_DECISION",
+      "ARTIFACT_STORAGE_LOSS_BEFORE_SIDE_EFFECT"
+    ],
+    "maximumLinkedReplacementAttemptsPerIntent": 1,
+    "sharedConditions": [
+      "exact model ID and effective generation parameters",
+      "task contract and natural-language task input",
+      "screenshot-only observer and coordinate UI tools",
+      "initial application state and scenario seed",
+      "step, model-call, replan, wall-time, and cost budgets",
+      "approval card content and deterministic human decision fixture",
+      "rendered sandbox applications and normal browser requests"
+    ],
+    "humanApprovalFixture": {
+      "fixtureId": "approve-exact-compliant-context-v1",
+      "rule": "approve 38900 or 39900 USD exact compliant context; reject 47900 USD or any contract violation",
+      "sameForEveryArm": true
+    },
+    "arms": ["baseline", "protected"],
+    "baselineAblations": [
+      "server-bound capability validation",
+      "stable semantic idempotency",
+      "independent visible-state verification",
+      "persistent effect ledger",
+      "typed failure-class recovery"
+    ],
+    "protectedRuntime": "all trust-runtime components enabled"
+  },
+  "benchmarkConfiguration": {
+    "status": "MUST_BE_PINNED_BEFORE_EXECUTION",
+    "referenceProvider": "openai",
+    "referenceModelFamily": "gpt-5.4-mini",
+    "exactModelId": null,
+    "gitCommitSha": null,
+    "promptVersion": null,
+    "browserVersion": null,
+    "playwrightVersion": null,
+    "modelPriceTableVersion": null
+  },
+  "cases": [
+    {
+      "caseId": "ui-drift-1101",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1101,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1102",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1102,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1103",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1103,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1104",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1104,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1105",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1105,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1106",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1106,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1107",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1107,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1108",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1108,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1109",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1109,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ui-drift-1110",
+      "faultId": "F-UI-DRIFT",
+      "faultClass": "UI_DRIFT",
+      "seed": 1110,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1201",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1201,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1202",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1202,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1203",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1203,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1204",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1204,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1205",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1205,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1206",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1206,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1207",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1207,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1208",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1208,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1209",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1209,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "price-drift-1210",
+      "faultId": "F-PRICE-DRIFT",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1210,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      },
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1301",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1301,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1302",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1302,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1303",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1303,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1304",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1304,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1305",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1305,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1306",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1306,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1307",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1307,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1308",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1308,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1309",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1309,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    },
+    {
+      "caseId": "ambiguous-commit-1310",
+      "faultId": "F-AMBIGUOUS-COMMIT",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1310,
+      "parameters": {},
+      "expectedTerminalOutcome": "SUCCEEDED",
+      "modes": ["baseline", "protected"],
+      "humanApprovalFixture": "approve-exact-compliant-context-v1"
+    }
+  ],
+  "executionSchedule": [
+    {
+      "ordinal": 1,
+      "intentId": "intent-ui-drift-1105-baseline",
+      "caseId": "ui-drift-1105",
+      "faultClass": "UI_DRIFT",
+      "seed": 1105,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 2,
+      "intentId": "intent-ui-drift-1105-protected",
+      "caseId": "ui-drift-1105",
+      "faultClass": "UI_DRIFT",
+      "seed": 1105,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 3,
+      "intentId": "intent-ui-drift-1104-protected",
+      "caseId": "ui-drift-1104",
+      "faultClass": "UI_DRIFT",
+      "seed": 1104,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 4,
+      "intentId": "intent-ui-drift-1104-baseline",
+      "caseId": "ui-drift-1104",
+      "faultClass": "UI_DRIFT",
+      "seed": 1104,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 5,
+      "intentId": "intent-ui-drift-1110-baseline",
+      "caseId": "ui-drift-1110",
+      "faultClass": "UI_DRIFT",
+      "seed": 1110,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 6,
+      "intentId": "intent-ui-drift-1110-protected",
+      "caseId": "ui-drift-1110",
+      "faultClass": "UI_DRIFT",
+      "seed": 1110,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 7,
+      "intentId": "intent-ambiguous-commit-1303-protected",
+      "caseId": "ambiguous-commit-1303",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1303,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 8,
+      "intentId": "intent-ambiguous-commit-1303-baseline",
+      "caseId": "ambiguous-commit-1303",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1303,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 9,
+      "intentId": "intent-price-drift-1204-baseline",
+      "caseId": "price-drift-1204",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1204,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 10,
+      "intentId": "intent-price-drift-1204-protected",
+      "caseId": "price-drift-1204",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1204,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 11,
+      "intentId": "intent-ambiguous-commit-1306-protected",
+      "caseId": "ambiguous-commit-1306",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1306,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 12,
+      "intentId": "intent-ambiguous-commit-1306-baseline",
+      "caseId": "ambiguous-commit-1306",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1306,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 13,
+      "intentId": "intent-price-drift-1205-baseline",
+      "caseId": "price-drift-1205",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1205,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 14,
+      "intentId": "intent-price-drift-1205-protected",
+      "caseId": "price-drift-1205",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1205,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 15,
+      "intentId": "intent-price-drift-1201-protected",
+      "caseId": "price-drift-1201",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1201,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 16,
+      "intentId": "intent-price-drift-1201-baseline",
+      "caseId": "price-drift-1201",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1201,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 17,
+      "intentId": "intent-price-drift-1210-baseline",
+      "caseId": "price-drift-1210",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1210,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 18,
+      "intentId": "intent-price-drift-1210-protected",
+      "caseId": "price-drift-1210",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1210,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 19,
+      "intentId": "intent-price-drift-1206-protected",
+      "caseId": "price-drift-1206",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1206,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 20,
+      "intentId": "intent-price-drift-1206-baseline",
+      "caseId": "price-drift-1206",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1206,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 21,
+      "intentId": "intent-ui-drift-1103-baseline",
+      "caseId": "ui-drift-1103",
+      "faultClass": "UI_DRIFT",
+      "seed": 1103,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 22,
+      "intentId": "intent-ui-drift-1103-protected",
+      "caseId": "ui-drift-1103",
+      "faultClass": "UI_DRIFT",
+      "seed": 1103,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 23,
+      "intentId": "intent-ui-drift-1106-protected",
+      "caseId": "ui-drift-1106",
+      "faultClass": "UI_DRIFT",
+      "seed": 1106,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 24,
+      "intentId": "intent-ui-drift-1106-baseline",
+      "caseId": "ui-drift-1106",
+      "faultClass": "UI_DRIFT",
+      "seed": 1106,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 25,
+      "intentId": "intent-ambiguous-commit-1304-baseline",
+      "caseId": "ambiguous-commit-1304",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1304,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 26,
+      "intentId": "intent-ambiguous-commit-1304-protected",
+      "caseId": "ambiguous-commit-1304",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1304,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 27,
+      "intentId": "intent-ambiguous-commit-1307-protected",
+      "caseId": "ambiguous-commit-1307",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1307,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 28,
+      "intentId": "intent-ambiguous-commit-1307-baseline",
+      "caseId": "ambiguous-commit-1307",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1307,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 29,
+      "intentId": "intent-ui-drift-1101-baseline",
+      "caseId": "ui-drift-1101",
+      "faultClass": "UI_DRIFT",
+      "seed": 1101,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 30,
+      "intentId": "intent-ui-drift-1101-protected",
+      "caseId": "ui-drift-1101",
+      "faultClass": "UI_DRIFT",
+      "seed": 1101,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 31,
+      "intentId": "intent-ui-drift-1109-protected",
+      "caseId": "ui-drift-1109",
+      "faultClass": "UI_DRIFT",
+      "seed": 1109,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 32,
+      "intentId": "intent-ui-drift-1109-baseline",
+      "caseId": "ui-drift-1109",
+      "faultClass": "UI_DRIFT",
+      "seed": 1109,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 33,
+      "intentId": "intent-price-drift-1207-baseline",
+      "caseId": "price-drift-1207",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1207,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 34,
+      "intentId": "intent-price-drift-1207-protected",
+      "caseId": "price-drift-1207",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1207,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 35,
+      "intentId": "intent-ui-drift-1107-protected",
+      "caseId": "ui-drift-1107",
+      "faultClass": "UI_DRIFT",
+      "seed": 1107,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 36,
+      "intentId": "intent-ui-drift-1107-baseline",
+      "caseId": "ui-drift-1107",
+      "faultClass": "UI_DRIFT",
+      "seed": 1107,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 37,
+      "intentId": "intent-ambiguous-commit-1302-baseline",
+      "caseId": "ambiguous-commit-1302",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1302,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 38,
+      "intentId": "intent-ambiguous-commit-1302-protected",
+      "caseId": "ambiguous-commit-1302",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1302,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 39,
+      "intentId": "intent-ambiguous-commit-1309-protected",
+      "caseId": "ambiguous-commit-1309",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1309,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 40,
+      "intentId": "intent-ambiguous-commit-1309-baseline",
+      "caseId": "ambiguous-commit-1309",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1309,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 41,
+      "intentId": "intent-ui-drift-1102-baseline",
+      "caseId": "ui-drift-1102",
+      "faultClass": "UI_DRIFT",
+      "seed": 1102,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 42,
+      "intentId": "intent-ui-drift-1102-protected",
+      "caseId": "ui-drift-1102",
+      "faultClass": "UI_DRIFT",
+      "seed": 1102,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 43,
+      "intentId": "intent-ui-drift-1108-protected",
+      "caseId": "ui-drift-1108",
+      "faultClass": "UI_DRIFT",
+      "seed": 1108,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 44,
+      "intentId": "intent-ui-drift-1108-baseline",
+      "caseId": "ui-drift-1108",
+      "faultClass": "UI_DRIFT",
+      "seed": 1108,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 45,
+      "intentId": "intent-ambiguous-commit-1301-baseline",
+      "caseId": "ambiguous-commit-1301",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1301,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 46,
+      "intentId": "intent-ambiguous-commit-1301-protected",
+      "caseId": "ambiguous-commit-1301",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1301,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 47,
+      "intentId": "intent-price-drift-1202-protected",
+      "caseId": "price-drift-1202",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1202,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 48,
+      "intentId": "intent-price-drift-1202-baseline",
+      "caseId": "price-drift-1202",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1202,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 49,
+      "intentId": "intent-ambiguous-commit-1308-baseline",
+      "caseId": "ambiguous-commit-1308",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1308,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 50,
+      "intentId": "intent-ambiguous-commit-1308-protected",
+      "caseId": "ambiguous-commit-1308",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1308,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 51,
+      "intentId": "intent-price-drift-1208-protected",
+      "caseId": "price-drift-1208",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1208,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 52,
+      "intentId": "intent-price-drift-1208-baseline",
+      "caseId": "price-drift-1208",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1208,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 53,
+      "intentId": "intent-ambiguous-commit-1305-baseline",
+      "caseId": "ambiguous-commit-1305",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1305,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 54,
+      "intentId": "intent-ambiguous-commit-1305-protected",
+      "caseId": "ambiguous-commit-1305",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1305,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 55,
+      "intentId": "intent-price-drift-1209-protected",
+      "caseId": "price-drift-1209",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1209,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 56,
+      "intentId": "intent-price-drift-1209-baseline",
+      "caseId": "price-drift-1209",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1209,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 57,
+      "intentId": "intent-price-drift-1203-baseline",
+      "caseId": "price-drift-1203",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1203,
+      "mode": "baseline"
+    },
+    {
+      "ordinal": 58,
+      "intentId": "intent-price-drift-1203-protected",
+      "caseId": "price-drift-1203",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1203,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 59,
+      "intentId": "intent-ambiguous-commit-1310-protected",
+      "caseId": "ambiguous-commit-1310",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1310,
+      "mode": "protected"
+    },
+    {
+      "ordinal": 60,
+      "intentId": "intent-ambiguous-commit-1310-baseline",
+      "caseId": "ambiguous-commit-1310",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1310,
+      "mode": "baseline"
+    }
+  ]
+}

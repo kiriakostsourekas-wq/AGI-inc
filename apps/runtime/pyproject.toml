@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trust-runtime"
+version = "0.1.0"
+description = "Policy, approval, and state-machine core for the computer-use trust runtime"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.15,<2",
+  "boto3>=1.40,<2",
+  "fastapi>=0.115,<1",
+  "openai>=1.90,<2",
+  "opentelemetry-api>=1.37,<2",
+  "opentelemetry-exporter-otlp-proto-http>=1.37,<2",
+  "opentelemetry-sdk>=1.37,<2",
+  "playwright>=1.52,<2",
+  "pydantic-settings>=2.6,<3",
+  "psycopg[binary,pool]>=3.2,<4",
+  "sqlalchemy[asyncio]>=2.0.38,<3",
+  "trust-contracts",
+  "typer>=0.15,<1",
+  "uvicorn>=0.34,<1",
+]
+
+[dependency-groups]
+dev = [
+  "httpx>=0.27,<1",
+  "hypothesis>=6.120,<7",
+  "pyright>=1.1.400,<2",
+  "pytest>=8.3,<9",
+  "pytest-asyncio>=1,<2",
+  "pytest-cov>=6,<7",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+trust-runtime = "trust_runtime.cli:app"
+trust-eval = "trust_runtime.eval_cli:app"
+
+[tool.uv.sources]
+trust-contracts = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trust_runtime"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC", "S", "RUF"]
+ignore = ["S101"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+include = ["src", "../../packages/contracts/python/src"]
+reportUnusedFunction = false
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --strict-config"
+testpaths = ["tests"]
+markers = [
+  "postgres: requires an explicitly enabled disposable PostgreSQL database",
+  "browser: requires an explicitly enabled built sandbox and headless browser",
+]

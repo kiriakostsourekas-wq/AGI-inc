@@ -1,0 +1,170 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: trust_runtime
+          POSTGRES_USER: trust
+          POSTGRES_PASSWORD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U trust -d trust_runtime"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+
+    env:
+      APP_ENV: test
+      DATABASE_URL: postgresql+psycopg://runtime_app:trust_runtime@localhost:5432/trust_runtime
+      RUNTIME_ROLE_DATABASE_URL: postgresql+psycopg://runtime_app:trust_runtime@localhost:5432/trust_runtime
+      ORACLE_DATABASE_URL: postgresql+psycopg://eval_oracle:trust_oracle@localhost:5432/trust_runtime
+      MIGRATION_DATABASE_URL: postgresql+psycopg://trust:trust@localhost:5432/trust_runtime
+      STATE_STORE_BACKEND: postgres
+      AGENT_PROVIDER: mock
+      APPROVAL_HMAC_SECRET: ci-only-approval-secret-at-least-32-bytes
+      ARTIFACT_SIGNING_SECRET: ci-only-artifact-secret-at-least-32-bytes
+      DEMO_PAYMENT_SECRET: ci-synthetic-payment-token
+      EVALUATION_OPERATOR_TOKEN: ci-operator-token
+      TRUST_RUN_DATABASE_TESTS: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pinned pnpm
+        run: corepack enable && corepack prepare pnpm@10.34.4 --activate
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Install JavaScript dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Python dependencies
+        run: uv sync --all-packages --frozen
+
+      - name: Provision isolated database roles
+        run: psql postgresql://trust:trust@localhost:5432/trust_runtime -v ON_ERROR_STOP=1 -f infra/postgres/init.sql
+
+      - name: Validate migrations
+        run: |
+          uv run --project apps/runtime alembic upgrade head
+          uv run --project apps/runtime alembic downgrade base
+          uv run --project apps/runtime alembic upgrade head
+
+      - name: Lint and format
+        run: pnpm lint && pnpm format:check
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit and integration tests
+        run: pnpm test
+
+      - name: Enforce critical safety-module coverage
+        run: >-
+          uv run --all-packages pytest apps/runtime/tests tests/security
+          --cov=trust_runtime.policy
+          --cov=trust_runtime.approvals
+          --cov=trust_runtime.state_machine
+          --cov=trust_runtime.verification
+          --cov=trust_runtime.recovery
+          --cov=trust_runtime.orchestrator
+          --cov-fail-under=85
+          --cov-report=term
+
+      - name: Build web applications
+        run: pnpm build
+
+      - name: Build production container images
+        run: |
+          docker build -f infra/docker/runtime.Dockerfile -t trust-runtime:ci .
+          docker build -f infra/docker/oracle.Dockerfile -t trust-oracle:ci .
+          docker build -f infra/docker/web.Dockerfile -t trust-web:ci .
+          docker build -f infra/docker/sandbox.Dockerfile -t trust-sandbox:ci .
+
+      - name: Install browser runtime
+        run: uv run --project apps/runtime playwright install --with-deps chromium
+
+      - name: Rendered browser safety workflow
+        env:
+          SANDBOX_ADMIN_TOKEN: local-sandbox-admin
+          SANDBOX_APPROVAL_SECRET: ci-local-sandbox-approval-secret-at-least-32-bytes
+          TRUST_RUN_BROWSER_TESTS: "1"
+          SANDBOX_E2E_PORT: "3001"
+          SANDBOX_REQUIRE_DURABLE_GATEWAY: "false"
+        run: |
+          pnpm --filter @trust/sandbox start > /tmp/trust-sandbox.log 2>&1 &
+          sandbox_pid=$!
+          trap 'kill $sandbox_pid 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            curl --fail --silent http://localhost:3001/healthz >/dev/null 2>&1 && break
+            curl --fail --silent http://localhost:3001/ >/dev/null 2>&1 && break
+            sleep 1
+          done
+          curl --fail --silent http://localhost:3001/ >/dev/null
+          uv run --all-packages pytest apps/runtime/tests/test_browser_e2e.py -q
+
+      - name: PostgreSQL-authoritative rendered commit workflow
+        env:
+          APP_ENV: test
+          STATE_STORE_BACKEND: postgres
+          PUBLIC_LIVE_RUNS_ENABLED: "true"
+          AGENT_PROVIDER: mock
+          APPROVAL_HMAC_SECRET: ci-runtime-approval-secret-at-least-32-bytes
+          ARTIFACT_SIGNING_SECRET: ci-runtime-artifact-secret-at-least-32-bytes
+          SANDBOX_ADMIN_TOKEN: local-sandbox-admin
+          SANDBOX_APPROVAL_SECRET: ci-sandbox-approval-secret-at-least-32-bytes
+          SANDBOX_GATEWAY_TOKEN: ci-durable-gateway-token-at-least-32-bytes
+          RUNTIME_INTERNAL_BASE_URL: http://127.0.0.1:8100
+          SANDBOX_REQUIRE_DURABLE_GATEWAY: "true"
+        run: |
+          uv run --project apps/runtime uvicorn trust_runtime.main:app --host 127.0.0.1 --port 8100 > /tmp/trust-runtime-durable.log 2>&1 &
+          runtime_pid=$!
+          pnpm --filter @trust/sandbox start > /tmp/trust-sandbox-durable.log 2>&1 &
+          sandbox_pid=$!
+          cleanup() { kill $runtime_pid $sandbox_pid 2>/dev/null || true; }
+          trap cleanup EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8100/healthz >/dev/null && curl --fail --silent http://localhost:3001/ >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          uv run --all-packages python scripts/durable_browser_probe.py
+
+      - name: Deterministic smoke evaluation
+        run: make eval-smoke
+
+      - name: Security and evaluation artifact audit
+        run: |
+          uv run --project apps/runtime pytest tests/security
+          python scripts/security_audit.py
+
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4

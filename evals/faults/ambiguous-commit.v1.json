@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "faultId": "F-AMBIGUOUS-COMMIT",
+  "faultClass": "AMBIGUOUS_COMMIT",
+  "phase": "before_response",
+  "trigger": {
+    "endpoint": "northstar.commit",
+    "attempt": 1
+  },
+  "parameters": {
+    "commitBeforeResponse": true,
+    "statusCode": 504
+  },
+  "durationSteps": 1,
+  "expectedResponseClass": "VERIFY_EXTERNAL_STATE_WITHOUT_RETRY",
+  "recoverable": true
+}

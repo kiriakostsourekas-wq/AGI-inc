@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "1.0.0",
+  "fixtureVersion": "disrupted-trip-v1",
+  "cases": [
+    {
+      "caseId": "ui-drift-1101",
+      "faultClass": "UI_DRIFT",
+      "seed": 1101
+    },
+    {
+      "caseId": "ui-drift-1102",
+      "faultClass": "UI_DRIFT",
+      "seed": 1102
+    },
+    {
+      "caseId": "ui-drift-1103",
+      "faultClass": "UI_DRIFT",
+      "seed": 1103
+    },
+    {
+      "caseId": "ui-drift-1104",
+      "faultClass": "UI_DRIFT",
+      "seed": 1104
+    },
+    {
+      "caseId": "ui-drift-1105",
+      "faultClass": "UI_DRIFT",
+      "seed": 1105
+    },
+    {
+      "caseId": "ui-drift-1106",
+      "faultClass": "UI_DRIFT",
+      "seed": 1106
+    },
+    {
+      "caseId": "ui-drift-1107",
+      "faultClass": "UI_DRIFT",
+      "seed": 1107
+    },
+    {
+      "caseId": "ui-drift-1108",
+      "faultClass": "UI_DRIFT",
+      "seed": 1108
+    },
+    {
+      "caseId": "ui-drift-1109",
+      "faultClass": "UI_DRIFT",
+      "seed": 1109
+    },
+    {
+      "caseId": "ui-drift-1110",
+      "faultClass": "UI_DRIFT",
+      "seed": 1110
+    },
+    {
+      "caseId": "price-drift-1201",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1201,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      }
+    },
+    {
+      "caseId": "price-drift-1202",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1202,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      }
+    },
+    {
+      "caseId": "price-drift-1203",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1203,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      }
+    },
+    {
+      "caseId": "price-drift-1204",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1204,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      }
+    },
+    {
+      "caseId": "price-drift-1205",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1205,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 39900
+      }
+    },
+    {
+      "caseId": "price-drift-1206",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1206,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      }
+    },
+    {
+      "caseId": "price-drift-1207",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1207,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      }
+    },
+    {
+      "caseId": "price-drift-1208",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1208,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      }
+    },
+    {
+      "caseId": "price-drift-1209",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1209,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      }
+    },
+    {
+      "caseId": "price-drift-1210",
+      "faultClass": "PRICE_DRIFT",
+      "seed": 1210,
+      "parameters": {
+        "fromMinor": 38900,
+        "toMinor": 47900
+      }
+    },
+    {
+      "caseId": "ambiguous-commit-1301",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1301
+    },
+    {
+      "caseId": "ambiguous-commit-1302",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1302
+    },
+    {
+      "caseId": "ambiguous-commit-1303",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1303
+    },
+    {
+      "caseId": "ambiguous-commit-1304",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1304
+    },
+    {
+      "caseId": "ambiguous-commit-1305",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1305
+    },
+    {
+      "caseId": "ambiguous-commit-1306",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1306
+    },
+    {
+      "caseId": "ambiguous-commit-1307",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1307
+    },
+    {
+      "caseId": "ambiguous-commit-1308",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1308
+    },
+    {
+      "caseId": "ambiguous-commit-1309",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1309
+    },
+    {
+      "caseId": "ambiguous-commit-1310",
+      "faultClass": "AMBIGUOUS_COMMIT",
+      "seed": 1310
+    }
+  ]
+}

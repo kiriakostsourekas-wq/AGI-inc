@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0.0",
+  "faultId": "F-UI-DRIFT",
+  "faultClass": "UI_DRIFT",
+  "phase": "before_observation",
+  "trigger": {
+    "route": "northstar.review",
+    "visit": 1
+  },
+  "parameters": {
+    "variant": "move_and_rename_confirm"
+  },
+  "durationSteps": 3,
+  "expectedResponseClass": "REOBSERVE_AND_REACQUIRE",
+  "recoverable": true
+}

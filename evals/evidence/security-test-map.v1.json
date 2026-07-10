@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "TESTS_EXIST_EXECUTION_EVIDENCE_REQUIRES_GREEN_COMMAND",
+  "controls": [
+    {
+      "control": "actor_cannot_self_classify_commit",
+      "testFile": "apps/runtime/tests/test_effects_policy_approvals.py",
+      "testName": "test_actor_cannot_choose_effect_class",
+      "command": "uv run --all-packages pytest apps/runtime/tests/test_effects_policy_approvals.py"
+    },
+    {
+      "control": "approval_single_use_replay_rejected",
+      "testFile": "apps/runtime/tests/test_effects_policy_approvals.py",
+      "testName": "test_approval_is_exact_single_use",
+      "command": "uv run --all-packages pytest apps/runtime/tests/test_effects_policy_approvals.py"
+    },
+    {
+      "control": "terminal_state_immutable",
+      "testFile": "apps/runtime/tests/test_state_machine.py",
+      "testName": "test_terminal_state_is_immutable",
+      "command": "uv run --all-packages pytest apps/runtime/tests/test_state_machine.py"
+    },
+    {
+      "control": "public_state_excludes_seed_fault_secret",
+      "testFile": "apps/sandbox/tests/store.test.ts",
+      "testName": "does not expose fault, seed, or secret metadata in public state",
+      "command": "pnpm --filter @trust/sandbox test"
+    },
+    {
+      "control": "concurrent_commit_is_idempotent",
+      "testFile": "apps/sandbox/tests/store.test.ts",
+      "testName": "serializes concurrent identical commits and returns one idempotent replay",
+      "command": "pnpm --filter @trust/sandbox test"
+    },
+    {
+      "control": "ambiguous_commit_does_not_duplicate",
+      "testFile": "apps/sandbox/tests/store.test.ts",
+      "testName": "commits before an ambiguous response and never duplicates state",
+      "command": "pnpm --filter @trust/sandbox test"
+    },
+    {
+      "control": "calendar_update_is_idempotent",
+      "testFile": "apps/sandbox/tests/store.test.ts",
+      "testName": "requires both observable channels and updates exactly once",
+      "command": "pnpm --filter @trust/sandbox test"
+    },
+    {
+      "control": "prompt_injection_is_untrusted_data",
+      "testFile": "apps/sandbox/tests/store.test.ts",
+      "testName": "renders prompt-injection seed %i only as untrusted email data",
+      "command": "pnpm --filter @trust/sandbox test"
+    },
+    {
+      "control": "browser_context_denies_oracle_runtime_and_internet",
+      "testFile": "apps/runtime/tests/test_browser_e2e.py",
+      "testName": "test_real_browser_context_denies_runtime_oracle_and_external_egress",
+      "command": "TRUST_RUN_BROWSER_TESTS=1 pytest apps/runtime/tests/test_browser_e2e.py"
+    },
+    {
+      "control": "model_request_excludes_sealed_metadata_and_secrets",
+      "testFile": "apps/runtime/tests/test_model_usage.py",
+      "testName": "test_final_model_request_excludes_sealed_metadata_and_secrets",
+      "command": "pytest apps/runtime/tests/test_model_usage.py"
+    },
+    {
+      "control": "replay_never_calls_model",
+      "testFile": "apps/runtime/tests/test_artifacts.py",
+      "testName": "test_replay_returns_recorded_frame_without_model_call",
+      "command": "pytest apps/runtime/tests/test_artifacts.py"
+    },
+    {
+      "control": "rendered_commit_is_postgres_authoritative",
+      "testFile": "scripts/durable_browser_probe.py",
+      "testName": "database_evidence",
+      "command": "python scripts/durable_browser_probe.py"
+    }
+  ]
+}

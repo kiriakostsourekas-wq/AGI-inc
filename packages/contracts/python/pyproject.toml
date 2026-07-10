@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "trust-contracts"
+version = "0.1.0"
+description = "Typed public and sealed contracts for the computer-use trust runtime"
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2.12,<3"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trust_contracts"]

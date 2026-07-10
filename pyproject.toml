@@ -1,0 +1,28 @@
+[tool.uv.workspace]
+members = ["apps/runtime", "apps/oracle", "packages/contracts/python"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC", "S", "RUF"]
+ignore = ["S101"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
+include = ["apps/runtime/src", "apps/oracle/src", "packages/contracts/python/src"]
+extraPaths = ["apps/runtime/src", "apps/oracle/src", "packages/contracts/python/src"]
+reportUnusedFunction = false
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --strict-config --import-mode=importlib"
+asyncio_mode = "auto"
+testpaths = ["apps/runtime/tests", "apps/oracle/tests"]
+markers = [
+  "postgres: requires an explicitly enabled disposable PostgreSQL database",
+  "browser: requires an explicitly enabled built sandbox and headless browser",
+]

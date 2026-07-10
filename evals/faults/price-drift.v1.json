@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "faultId": "F-PRICE-DRIFT",
+  "faultClass": "PRICE_DRIFT",
+  "phase": "before_action",
+  "trigger": {
+    "derivedEffectClass": "FINANCIAL_OR_CONTRACTUAL_COMMIT",
+    "attempt": 1
+  },
+  "parameters": {
+    "seedRanges": [
+      {
+        "from": 1201,
+        "to": 1205,
+        "toMinor": 39900
+      },
+      {
+        "from": 1206,
+        "to": 1210,
+        "toMinor": 47900
+      }
+    ]
+  },
+  "durationSteps": 1,
+  "expectedResponseClass": "INVALIDATE_APPROVAL_AND_REPLAN",
+  "recoverable": true
+}

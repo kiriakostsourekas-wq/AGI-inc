@@ -1,0 +1,26 @@
+{
+  "name": "trust-runtime-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A trust runtime and disrupted-trip reference environment for computer-use agents.",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.34.4",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n web,sandbox,runtime -c cyan,magenta,yellow \"pnpm --filter @trust/web dev\" \"pnpm --filter @trust/sandbox dev\" \"uv run --project apps/runtime uvicorn trust_runtime.main:app --reload --port 8000\"",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint && uv run --all-packages ruff check apps packages evals",
+    "format:check": "prettier --check . && uv run --all-packages ruff format --check apps packages evals",
+    "format": "prettier --write . && uv run --all-packages ruff format apps packages evals",
+    "typecheck": "pnpm -r typecheck && uv run --all-packages pyright",
+    "test": "pnpm -r test && uv run --all-packages pytest",
+    "test:e2e": "pnpm --filter @trust/web test:e2e",
+    "clean": "pnpm -r clean"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.1",
+    "prettier": "3.9.5"
+  }
+}
