@@ -16,7 +16,13 @@ from decimal import Decimal
 from typing import Any, Protocol, runtime_checkable
 from urllib.parse import urlsplit
 
-from trust_contracts import ActionProposal, AuthorizedAction, ToolName, normalize_origin
+from trust_contracts import (
+    ActionProposal,
+    AuthorizedAction,
+    EffectClass,
+    ToolName,
+    normalize_origin,
+)
 
 from .telemetry import set_attributes, tracer
 
@@ -207,7 +213,12 @@ class BrowserExecutor:
         else:
             raise ValueError(f"unsupported browser action: {proposal.tool}")
 
-        await page.wait_for_timeout(250)
+        settle_ms = (
+            1_500
+            if action.effect.effect_class is EffectClass.FINANCIAL_OR_CONTRACTUAL_COMMIT
+            else 250
+        )
+        await page.wait_for_timeout(settle_ms)
         if _origin(page.url) not in self._allowed_origins:
             raise PermissionError("browser navigation escaped the exact origin allowlist")
         screenshot = await page.screenshot(type="png")
