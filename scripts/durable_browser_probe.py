@@ -122,10 +122,10 @@ def database_evidence(*, database_url: str, run_id: str) -> tuple[object, ...]:
                                (select count(*) from runtime.side_effects y
                                  where y.run_id = r.id)
                           from runtime.runs r
-                          join runtime.approval_grants ag on ag.run_id = r.id
-                          join runtime.effect_proposals ep on ep.id = ag.effect_proposal_id
-                          join runtime.side_effects se on se.run_id = r.id
-                          join sandbox.replacement_bookings rb on rb.run_id = r.id
+                          left join runtime.approval_grants ag on ag.run_id = r.id
+                          left join runtime.effect_proposals ep on ep.id = ag.effect_proposal_id
+                          left join runtime.side_effects se on se.run_id = r.id
+                          left join sandbox.replacement_bookings rb on rb.run_id = r.id
                          where r.id = :run_id
                         """
                     ),
