@@ -161,6 +161,7 @@ def test_operator_evaluation_api_persists_all_intents_and_enforces_cap(
         model_input_cost_per_million_usd="1.00",
         model_output_cost_per_million_usd="4.00",
         evaluation_operator_token=operator_token,
+        evaluation_max_total_cost_usd="150.00",
         git_commit_sha="a" * 40,
         browser_version="chromium-test-149.0.0",
     )
