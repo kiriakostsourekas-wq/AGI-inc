@@ -106,30 +106,37 @@ def drive(*, runtime_base_url: str, timeout_seconds: int) -> dict[str, object]:
 
 def database_evidence(*, database_url: str, run_id: str) -> tuple[object, ...]:
     engine = create_engine(database_url)
+    deadline = time.monotonic() + 5
+    row = None
     try:
-        with engine.connect() as connection:
-            row = connection.execute(
-                text(
-                    """
-                    select r.status, ag.status, ep.status, se.status,
-                           se.verified_at is not null, rb.verified_at is not null,
-                           rb.status,
-                           (select count(*) from sandbox.replacement_bookings x
-                             where x.run_id = r.id),
-                           (select count(*) from runtime.side_effects y
-                             where y.run_id = r.id)
-                      from runtime.runs r
-                      join runtime.approval_grants ag on ag.run_id = r.id
-                      join runtime.effect_proposals ep on ep.id = ag.effect_proposal_id
-                      join runtime.side_effects se on se.run_id = r.id
-                      join sandbox.replacement_bookings rb on rb.run_id = r.id
-                     where r.id = :run_id
-                    """
-                ),
-                {"run_id": run_id},
-            ).one()
+        while row is None and time.monotonic() < deadline:
+            with engine.connect() as connection:
+                row = connection.execute(
+                    text(
+                        """
+                        select r.status, ag.status, ep.status, se.status,
+                               se.verified_at is not null, rb.verified_at is not null,
+                               rb.status,
+                               (select count(*) from sandbox.replacement_bookings x
+                                 where x.run_id = r.id),
+                               (select count(*) from runtime.side_effects y
+                                 where y.run_id = r.id)
+                          from runtime.runs r
+                          join runtime.approval_grants ag on ag.run_id = r.id
+                          join runtime.effect_proposals ep on ep.id = ag.effect_proposal_id
+                          join runtime.side_effects se on se.run_id = r.id
+                          join sandbox.replacement_bookings rb on rb.run_id = r.id
+                         where r.id = :run_id
+                        """
+                    ),
+                    {"run_id": run_id},
+                ).one_or_none()
+            if row is None:
+                time.sleep(0.2)
     finally:
         engine.dispose()
+    if row is None:
+        raise RuntimeError("durable database evidence was not materialized within 5 seconds")
     evidence = tuple(row)
     expected = ("SUCCEEDED", "CONSUMED", "COMMITTED", "VERIFIED", True, True, "confirmed", 1, 1)
     if evidence != expected:
