@@ -238,6 +238,8 @@ async def test_real_browser_context_denies_runtime_oracle_and_external_egress() 
             with pytest.raises(PlaywrightError):
                 await page.goto(forbidden, wait_until="domcontentloaded")
             assert page.url != forbidden
+        await page.close()
+        page = await context.new_page()
         await page.goto(f"http://gomail.localhost:{port}/")
         assert page.url.startswith(f"http://gomail.localhost:{port}/")
         await browser.close()
