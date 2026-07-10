@@ -10,7 +10,15 @@ from trust_runtime.orchestrator import MemoryEventSink
 from trust_runtime.policy import DeterministicPolicyEngine, PolicyContext
 from trust_runtime.service import RuntimeService
 from trust_runtime.state_machine import RunStateMachine
-from trust_runtime.worker import BaselineApprovalBroker, run_browser_worker
+from trust_runtime.worker import BaselineApprovalBroker, run_browser_worker, sandbox_app_urls
+
+
+def test_shared_sandbox_origin_maps_apps_to_paths() -> None:
+    assert sandbox_app_urls(("https://sandbox.example",)) == {
+        "gomail": "https://sandbox.example/gomail",
+        "northstar": "https://sandbox.example/northstar",
+        "dayplan": "https://sandbox.example/dayplan",
+    }
 
 
 class FailingChromium:

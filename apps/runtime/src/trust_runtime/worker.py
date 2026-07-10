@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 from decimal import Decimal
 from typing import Any, Protocol, cast
+from urllib.parse import urlsplit
 from uuid import UUID
 
 from playwright.async_api import async_playwright
@@ -269,7 +270,7 @@ class FixtureWorkflowAdapter:
     """Recorded-as-mock coordinate adapter for no-key smoke and replay generation."""
 
     def __init__(self, *, run_id: UUID, origins: tuple[str, ...]) -> None:
-        by_name = {origin.split("//", 1)[1].split(".", 1)[0]: origin for origin in origins}
+        by_name = sandbox_app_urls(origins)
         self._run_id = run_id
         self._calls = 0
         self._actions: list[tuple[ToolName, tuple[int, int] | None, str | None, str]] = [
@@ -324,6 +325,23 @@ class FixtureWorkflowAdapter:
             grounding_confidence=Decimal("1"),
             decision_summary=summary,
         )
+
+
+def sandbox_app_urls(origins: tuple[str, ...]) -> dict[str, str]:
+    """Map the synthetic apps to either dedicated hosts or one host with paths."""
+
+    by_name: dict[str, str] = {}
+    for origin in origins:
+        host = urlsplit(origin).hostname or ""
+        for app in ("gomail", "northstar", "dayplan"):
+            if app in host:
+                by_name[app] = origin.rstrip("/")
+    if len(by_name) == 3:
+        return by_name
+    if len(origins) == 1:
+        base = origins[0].rstrip("/")
+        return {app: f"{base}/{app}" for app in ("gomail", "northstar", "dayplan")}
+    raise RuntimeError("sandbox origins must provide three named hosts or one shared host")
 
 
 def _agent_adapter(settings: RuntimeSettings, manifest: RunManifest) -> AgentAdapter:
@@ -413,10 +431,9 @@ async def _run_browser_worker_impl(*, service: WorkerService, run_id: UUID) -> R
         if not reset.ok:
             raise RuntimeError("sandbox reset failed")
         page = await context.new_page()
-        gomail_origin = next(origin for origin in contract.allowed_origins if "gomail" in origin)
-        northstar_origin = next(
-            origin for origin in contract.allowed_origins if "northstar" in origin
-        )
+        sandbox_urls = sandbox_app_urls(contract.allowed_origins)
+        gomail_origin = sandbox_urls["gomail"]
+        northstar_origin = sandbox_urls["northstar"]
         await page.goto(f"{gomail_origin}/?run={run_id}")
         await page.wait_for_timeout(500)
         browser_page = cast(BrowserPage, page)

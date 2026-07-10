@@ -15,7 +15,11 @@ from trust_contracts import (
 )
 
 
-def reference_task_contract() -> TaskContract:
+def reference_task_contract(
+    *,
+    allowed_origins: tuple[str, ...] | None = None,
+    max_model_cost_usd: Decimal = Decimal("0.50"),
+) -> TaskContract:
     return TaskContract(
         goal="Recover the cancelled SFO-to-SEA trip and synchronize the calendar block.",
         hard_constraints=(
@@ -46,12 +50,16 @@ def reference_task_contract() -> TaskContract:
                 rule="exact_context_single_use_grant",
             ),
         ),
-        allowed_origins=(
+        allowed_origins=allowed_origins
+        or (
             "http://gomail.localhost:3001",
             "http://northstar.localhost:3001",
             "http://dayplan.localhost:3001",
         ),
         allowed_tools=tuple(ToolName),
         scenario_now=datetime(2030, 6, 13, 9, 0, tzinfo=ZoneInfo("America/Los_Angeles")),
-        max_model_cost_usd=Decimal("1.50"),
+        max_steps=30,
+        max_model_calls=20,
+        max_wall_time_seconds=300,
+        max_model_cost_usd=max_model_cost_usd,
     )

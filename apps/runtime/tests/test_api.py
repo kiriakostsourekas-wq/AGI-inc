@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from trust_runtime.api import create_app, runtime_service_from_app
-from trust_runtime.config import RuntimeSettings
+from trust_runtime.config import RuntimeSettings, StateStoreBackend
 
 
 def production_settings(**overrides) -> RuntimeSettings:
@@ -203,7 +203,11 @@ def test_idempotency_conflict_returns_versioned_error() -> None:
 
 
 def test_internal_gateway_requires_credential_and_postgres() -> None:
-    settings = RuntimeSettings(app_env="test", sandbox_gateway_token="g" * 32)
+    settings = RuntimeSettings(
+        app_env="test",
+        state_store_backend=StateStoreBackend.MEMORY,
+        sandbox_gateway_token="g" * 32,
+    )
     with TestClient(create_app(settings=settings)) as client:
         missing = client.post(
             "/internal/v1/gateway/commit",

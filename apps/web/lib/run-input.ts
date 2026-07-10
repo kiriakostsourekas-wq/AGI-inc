@@ -11,11 +11,14 @@ export interface ComposerValues {
   seed: number;
 }
 
-const localOrigins = [
-  "http://gomail.localhost:3001",
-  "http://northstar.localhost:3001",
-  "http://dayplan.localhost:3001",
-];
+const configuredSandboxOrigin = process.env.NEXT_PUBLIC_SANDBOX_ORIGIN?.replace(/\/$/, "");
+const localOrigins = configuredSandboxOrigin
+  ? [configuredSandboxOrigin]
+  : [
+      "http://gomail.localhost:3001",
+      "http://northstar.localhost:3001",
+      "http://dayplan.localhost:3001",
+    ];
 
 const allowedTools = [
   "ui.open_url",
@@ -96,11 +99,11 @@ export function buildCreateRunRequest(values: ComposerValues): CreateRunRequest 
       allowed_origins: localOrigins,
       allowed_tools: allowedTools,
       scenario_now: "2030-06-13T09:00:00-07:00",
-      max_steps: 60,
-      max_model_calls: 45,
+      max_steps: 30,
+      max_model_calls: 20,
       max_replans: 4,
-      max_wall_time_seconds: 600,
-      max_model_cost_usd: "1.50",
+      max_wall_time_seconds: 300,
+      max_model_cost_usd: "0.50",
       max_read_retries_per_step: 2,
       max_commit_retries: 0,
       non_progress_limit: 2,

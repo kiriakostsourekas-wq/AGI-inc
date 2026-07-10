@@ -75,15 +75,15 @@ class RuntimeSettings(BaseSettings):
     sandbox_admin_token: SecretStr = SecretStr("local-sandbox-admin")
     sandbox_gateway_token: SecretStr = SecretStr(_DEVELOPMENT_SECRET_PREFIX + "sandbox-gateway")
     public_live_runs_enabled: bool = False
-    max_public_concurrent_runs: int = Field(default=2, ge=1, le=20)
-    public_runs_per_ip_per_hour: int = Field(default=3, ge=1, le=100)
+    max_public_concurrent_runs: int = Field(default=1, ge=1, le=20)
+    public_runs_per_ip_per_hour: int = Field(default=1, ge=1, le=100)
     public_session_ttl_seconds: int = Field(default=3600, ge=60, le=86_400)
     public_artifact_ttl_seconds: int = Field(default=86_400, ge=300, le=604_800)
-    run_max_steps: int = Field(default=60, ge=1, le=500)
-    run_max_model_calls: int = Field(default=45, ge=1, le=500)
+    run_max_steps: int = Field(default=30, ge=1, le=500)
+    run_max_model_calls: int = Field(default=20, ge=1, le=500)
     run_max_replans: int = Field(default=4, ge=0, le=50)
-    run_max_wall_seconds: int = Field(default=600, ge=1, le=3600)
-    run_max_model_cost_usd: str = "1.50"
+    run_max_wall_seconds: int = Field(default=300, ge=1, le=3600)
+    run_max_model_cost_usd: str = "0.50"
     approval_ttl_seconds: int = Field(default=180, ge=15, le=900)
     browser_allowed_origins: Annotated[tuple[str, ...], NoDecode] = (
         "http://gomail.localhost:3001",
@@ -94,7 +94,7 @@ class RuntimeSettings(BaseSettings):
     evaluation_operator_token: SecretStr = SecretStr(
         _DEVELOPMENT_SECRET_PREFIX + "evaluation-operator"
     )
-    evaluation_max_total_cost_usd: Decimal = Field(default=Decimal("150.00"), gt=0)
+    evaluation_max_total_cost_usd: Decimal = Field(default=Decimal("25.00"), gt=0)
     git_commit_sha: str | None = None
     browser_version: str | None = None
     model_price_table_version: str = "development-v1"

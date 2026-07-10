@@ -85,7 +85,10 @@ class EvaluationExecutionWorker:
             if not isinstance(expected_outcome, str):
                 raise RuntimeError("evaluation case expected outcome is malformed")
             handle = self.service.create_evaluation_run(
-                contract=reference_task_contract(),
+                contract=reference_task_contract(
+                    allowed_origins=self.service.settings.browser_allowed_origins,
+                    max_model_cost_usd=Decimal(self.service.settings.run_max_model_cost_usd),
+                ),
                 mode=RunMode(claim.arm),
                 scenario_id=scenario_id,
                 scenario_seed=seed,

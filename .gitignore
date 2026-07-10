@@ -24,3 +24,4 @@ work/
 outputs/
 artifacts/
 .turbo/
+.vercel/
